@@ -7,6 +7,7 @@ import Collect from "./pages/Collect";
 import ContactUs from "./pages/ContactUs";
 import Footer from "./components/Footer";
 import DeliverySimulation from "./pages/DeliverySimulation";
+import Mapdistance from "./pages/Mapdistance";
 function App() {
   return (
     <Router>
