@@ -13,7 +13,7 @@ import ContactUs from "./pages/ContactUs";
 import Footer from "./components/Footer";
 import DeliverySimulation from "./pages/DeliverySimulation";
 import Navbar from "./components/Navbar";
-
+import Mapdistance from "./pages/Mapdistance";
 const AppContent = () => {
   const location = useLocation();
   const loadingBarRef = useRef(null);
@@ -41,6 +41,7 @@ const AppContent = () => {
         <Route path="/collect" element={<Collect />} />
         <Route path="/contact" element={<ContactUs />} />
         <Route path="/delivery-simulation" element={<DeliverySimulation />} />
+        <Route path="/map" element={<Mapdistance />} />
       </Routes>
     </>
   );
