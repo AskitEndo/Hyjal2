@@ -1,13 +1,13 @@
 import React from 'react';
 import HeroSection from '../components/HeroSection';
 
-function Home() {
+const Home = () => {
   return (
     <div>
       <HeroSection />
-      {/* You can add more sections or components here if needed */}
+      {/* Add other sections of your home page here */}
     </div>
   );
-}
+};
 
 export default Home;
