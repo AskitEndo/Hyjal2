@@ -25,7 +25,14 @@ export default function ContactUs() {
 
   return (
     <div className="flex flex-col items-center bg-blue-100 min-h-screen py-10">
-      <h2 className="text-4xl font-bold text-blue-800 mb-8">Contact Us</h2>
+      <h2 className="text-4xl font-bold text-blue-800 mb-8 flex items-center">
+        Contact Us
+        <span className="ml-2">
+          <span className="animate-dots">.</span>
+          <span className="animate-dots delay-100">.</span>
+          <span className="animate-dots delay-200">.</span>
+        </span>
+      </h2>
       <div className="space-y-6">
         {contactItems.map((item, index) => (
           <a
@@ -46,6 +53,25 @@ export default function ContactUs() {
       <p className="mt-8 text-blue-500 text-center">
         We appreciate your interest in water collection and donation!
       </p>
+
+      <style>
+        {`
+          @keyframes dot-blink {
+            0%, 100% { opacity: 0; transform: translateY(0); }
+            50% { opacity: 1; transform: translateY(-5px); }
+          }
+          .animate-dots {
+            animation: dot-blink 1s infinite;
+            display: inline-block;
+          }
+          .delay-100 {
+            animation-delay: 0.1s;
+          }
+          .delay-200 {
+            animation-delay: 0.2s;
+          }
+        `}
+      </style>
     </div>
   );
 }
