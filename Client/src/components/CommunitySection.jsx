@@ -1,48 +1,48 @@
-import React, { useState } from 'react';
-import { Loader2 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { Loader2 } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 const stateCoordinates = {
-  'ANDHRA PRADESH': { x: 200, y: 280 },
-  'ARUNACHAL PRADESH': { x: 320, y: 120 },
-  'ASSAM': { x: 300, y: 140 },
-  'BIHAR': { x: 240, y: 160 },
-  'CHHATTISGARH': { x: 200, y: 200 },
-  'GOA': { x: 140, y: 260 },
-  'GUJARAT': { x: 120, y: 200 },
-  'HARYANA': { x: 160, y: 120 },
-  'HIMACHAL PRADESH': { x: 160, y: 80 },
-  'JHARKHAND': { x: 240, y: 180 },
-  'KARNATAKA': { x: 160, y: 280 },
-  'KERALA': { x: 160, y: 320 },
-  'MADHYA PRADESH': { x: 180, y: 200 },
-  'MAHARASHTRA': { x: 160, y: 240 },
-  'MANIPUR': { x: 320, y: 160 },
-  'MEGHALAYA': { x: 280, y: 150 },
-  'MIZORAM': { x: 300, y: 180 },
-  'NAGALAND': { x: 320, y: 140 },
-  'ODISHA': { x: 240, y: 220 },
-  'PUNJAB': { x: 140, y: 100 },
-  'RAJASTHAN': { x: 140, y: 160 },
-  'SIKKIM': { x: 260, y: 140 },
-  'TAMIL NADU': { x: 180, y: 320 },
-  'TELANGANA': { x: 200, y: 240 },
-  'TRIPURA': { x: 280, y: 180 },
-  'UTTAR PRADESH': { x: 200, y: 140 },
-  'UTTARAKHAND': { x: 180, y: 100 },
-  'WEST BENGAL': { x: 260, y: 200 },
-  'DELHI': { x: 180, y: 120 }
+  "ANDHRA PRADESH": { x: 200, y: 280 },
+  "ARUNACHAL PRADESH": { x: 320, y: 120 },
+  ASSAM: { x: 300, y: 140 },
+  BIHAR: { x: 240, y: 160 },
+  CHHATTISGARH: { x: 200, y: 200 },
+  GOA: { x: 140, y: 260 },
+  GUJARAT: { x: 120, y: 200 },
+  HARYANA: { x: 160, y: 120 },
+  "HIMACHAL PRADESH": { x: 160, y: 80 },
+  JHARKHAND: { x: 240, y: 180 },
+  KARNATAKA: { x: 160, y: 280 },
+  KERALA: { x: 160, y: 320 },
+  "MADHYA PRADESH": { x: 180, y: 200 },
+  MAHARASHTRA: { x: 160, y: 240 },
+  MANIPUR: { x: 320, y: 160 },
+  MEGHALAYA: { x: 280, y: 150 },
+  MIZORAM: { x: 300, y: 180 },
+  NAGALAND: { x: 320, y: 140 },
+  ODISHA: { x: 240, y: 220 },
+  PUNJAB: { x: 140, y: 100 },
+  RAJASTHAN: { x: 140, y: 160 },
+  SIKKIM: { x: 260, y: 140 },
+  "TAMIL NADU": { x: 180, y: 320 },
+  TELANGANA: { x: 200, y: 240 },
+  TRIPURA: { x: 280, y: 180 },
+  "UTTAR PRADESH": { x: 200, y: 140 },
+  UTTARAKHAND: { x: 180, y: 100 },
+  "WEST BENGAL": { x: 260, y: 200 },
+  DELHI: { x: 180, y: 120 },
 };
 
 const IndiaMap = ({ locationInfo, isLoading }) => {
   const [hoveredState, setHoveredState] = useState(null);
 
   const getStateColor = (stateName) => {
-    if (!locationInfo) return '#e5e7eb';
+    if (!locationInfo) return "#e5e7eb";
     if (locationInfo.state.toUpperCase() === stateName) {
-      return '#fbbf24';
+      return "#fbbf24";
     }
-    return '#e5e7eb';
+    return "#e5e7eb";
   };
 
   if (isLoading) {
@@ -63,7 +63,7 @@ const IndiaMap = ({ locationInfo, isLoading }) => {
           stroke="#666"
           strokeWidth="2"
         />
-        
+
         {/* State markers */}
         {Object.entries(stateCoordinates).map(([state, coords]) => (
           <g key={state}>
@@ -95,7 +95,11 @@ const IndiaMap = ({ locationInfo, isLoading }) => {
 
         {/* Location marker */}
         {locationInfo && stateCoordinates[locationInfo.state.toUpperCase()] && (
-          <g transform={`translate(${stateCoordinates[locationInfo.state.toUpperCase()].x},${stateCoordinates[locationInfo.state.toUpperCase()].y})`}>
+          <g
+            transform={`translate(${
+              stateCoordinates[locationInfo.state.toUpperCase()].x
+            },${stateCoordinates[locationInfo.state.toUpperCase()].y})`}
+          >
             <circle r="12" fill="#ef4444" fillOpacity="0.2" />
             <circle r="6" fill="#ef4444" />
           </g>
@@ -126,17 +130,19 @@ const CommunitySection = () => {
   const fetchLocationFromPincode = async (pincode) => {
     setIsLoading(true);
     try {
-      const response = await fetch(`https://api.postalpincode.in/pincode/${pincode}`);
+      const response = await fetch(
+        `https://api.postalpincode.in/pincode/${pincode}`
+      );
       const data = await response.json();
-      
+
       if (data[0].Status === "Success") {
         const postOffice = data[0].PostOffice[0];
         const { District, State, Name } = postOffice;
-        
+
         setLocationInfo({
           name: Name,
           district: District,
-          state: State
+          state: State,
         });
         return true;
       }
@@ -151,7 +157,7 @@ const CommunitySection = () => {
   };
 
   const handlePincodeChange = (e) => {
-    const value = e.target.value.replace(/\D/g, '').slice(0, 6);
+    const value = e.target.value.replace(/\D/g, "").slice(0, 6);
     setPincode(value);
     setError("");
     setShowRouteButton(false);
@@ -183,6 +189,11 @@ const CommunitySection = () => {
                 className="bg-transparent border-none focus:outline-none text-yellow-900 placeholder-yellow-700 w-40"
                 value={pincode}
                 onChange={handlePincodeChange}
+                onKeyPress={(e) => {
+                  if (e.key === "Enter") {
+                    handleGoClick();
+                  }
+                }}
                 maxLength={6}
               />
               <button
@@ -193,7 +204,7 @@ const CommunitySection = () => {
                 {isLoading ? (
                   <Loader2 className="w-4 h-4 animate-spin" />
                 ) : (
-                  'Go'
+                  "Go"
                 )}
               </button>
             </div>
@@ -211,16 +222,16 @@ const CommunitySection = () => {
             <div className="text-red-500 text-sm mt-2 text-center">{error}</div>
           )}
 
-          <h2 className="text-2xl font-bold mb-8 text-center pt-4">
+          <h2 className="text-2xl font-bold mb-6 text-center pt-4">
             Your Community
           </h2>
-          
-          <div className="flex flex-col md:flex-row justify-around items-stretch gap-8 md:gap-16">
-            <div className="w-full md:w-1/3 lg:w-1/4 bg-white rounded-lg shadow-md overflow-hidden">
+
+          <div className="flex flex-col md:flex-row justify-around items-stretch gap-6 md:gap-12">
+            <div className="w-full md:w-2/5 lg:w-1/3 bg-white rounded-lg shadow-md overflow-hidden">
               <h3 className="text-lg font-bold p-4 bg-yellow-200">
                 Community Map
               </h3>
-              <div className="aspect-square relative">
+              <div className="aspect-[4/3] relative">
                 <IndiaMap 
                   locationInfo={locationInfo} 
                   isLoading={isLoading}
@@ -228,13 +239,13 @@ const CommunitySection = () => {
               </div>
             </div>
             
-            <div className="w-full md:w-1/3 lg:w-1/4 bg-white rounded-lg shadow-md overflow-hidden">
+            <div className="w-full md:w-2/5 lg:w-1/3 bg-white rounded-lg shadow-md overflow-hidden">
               <h3 className="text-lg font-bold p-4 bg-yellow-200">
                 Community Info
               </h3>
-              <div className="p-4">
+              <div className="p-3">
                 {locationInfo ? (
-                  <div className="space-y-2">
+                  <div className="space-y-1">
                     <p><strong>Area:</strong> {locationInfo.name}</p>
                     <p><strong>District:</strong> {locationInfo.district}</p>
                     <p><strong>State:</strong> {locationInfo.state}</p>

@@ -14,8 +14,8 @@ const Navbar = () => {
   }, []);
 
   const NavItem = ({ to, icon, label }) => (
-    <Link to={to} className="flex flex-col items-center">
-      <div className="bg-yellow-400 p-2 rounded-lg hover:bg-yellow-500 transition-colors duration-200 mb-1">
+    <Link to={to} className="flex flex-col items-center group">
+      <div className="bg-yellow-400 p-2 rounded-lg hover:bg-yellow-500 transition-all duration-200 mb-1 group-hover:scale-110">
         <div className="bg-yellow-300 rounded-full p-1">
           <lord-icon
             src={icon}
@@ -25,18 +25,18 @@ const Navbar = () => {
           </lord-icon>
         </div>
       </div>
-      <span className="text-xs font-medium text-yellow-900">{label}</span>
+      <span className="text-xs font-medium text-yellow-900 transition-all duration-200 group-hover:scale-110">{label}</span>
     </Link>
   );
 
   return (
-    <header className="bg-[rgb(255,226,134)] p-6 shadow-sm">
-      <div className="max-w-7xl mx-auto flex justify-between items-center">
-        <Link to="/" className="flex items-center space-x-4 bg-yellow-100 p-4 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-200">
+    <header className="bg-[rgb(255,226,134)] p-6 relative z-10">
+      <div className="max-w-7xl mx-auto flex justify-between items-center relative">
+        <Link to="/" className="flex items-center space-x-4 bg-yellow-100 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105">
           <div className="bg-[rgb(255,226,134)] h-12 w-12 flex items-center justify-center rounded-lg font-semibold text-yellow-900">
             <img src="/src/assets/Logo.png" alt="HyJal logo" className="h-10 w-10" />
           </div>
-          <h1 className="text-xl font-bold text-yellow-900">HyJal</h1>
+          <h1 className="text-2xl font-bold text-yellow-900">HyJal</h1>
         </Link>
         <nav className="flex space-x-6 items-center">
           <NavItem to="/" icon="https://cdn.lordicon.com/wmwqvixz.json" label="Home" />
