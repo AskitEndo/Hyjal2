@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import FastTypewriter from './FastTypewriter';
 
-
 const words = [
   "amazing opportunities",
   "innovative solutions",
