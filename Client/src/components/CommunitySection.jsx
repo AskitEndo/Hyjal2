@@ -211,7 +211,7 @@ const CommunitySection = () => {
             {showRouteButton && (
               <button
                 className="bg-yellow-400 px-6 py-2 rounded-full shadow-lg text-yellow-900 hover:bg-yellow-500 transition-colors duration-200"
-                onClick={() => navigate("/delivery-simulation")}
+                onClick={() => navigate("/map")}
               >
                 Go to route
               </button>
@@ -232,13 +232,10 @@ const CommunitySection = () => {
                 Community Map
               </h3>
               <div className="aspect-[4/3] relative">
-                <IndiaMap 
-                  locationInfo={locationInfo} 
-                  isLoading={isLoading}
-                />
+                <IndiaMap locationInfo={locationInfo} isLoading={isLoading} />
               </div>
             </div>
-            
+
             <div className="w-full md:w-2/5 lg:w-1/3 bg-white rounded-lg shadow-md overflow-hidden">
               <h3 className="text-lg font-bold p-4 bg-yellow-200">
                 Community Info
@@ -246,9 +243,15 @@ const CommunitySection = () => {
               <div className="p-3">
                 {locationInfo ? (
                   <div className="space-y-1">
-                    <p><strong>Area:</strong> {locationInfo.name}</p>
-                    <p><strong>District:</strong> {locationInfo.district}</p>
-                    <p><strong>State:</strong> {locationInfo.state}</p>
+                    <p>
+                      <strong>Area:</strong> {locationInfo.name}
+                    </p>
+                    <p>
+                      <strong>District:</strong> {locationInfo.district}
+                    </p>
+                    <p>
+                      <strong>State:</strong> {locationInfo.state}
+                    </p>
                   </div>
                 ) : (
                   <p className="text-gray-500">No information available</p>
