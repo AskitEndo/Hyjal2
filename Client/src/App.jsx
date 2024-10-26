@@ -1,15 +1,26 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import Donate from './pages/Donate';
+import Collect from './pages/Collect';
+import ContactUs from './pages/ContactUs';
 
 function App() {
-  const [count, setCount] = useState(0);
-
   return (
-    <>
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </>
+    <Router>
+      <div className="min-h-screen bg-yellow-50">
+        <Navbar />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/donate" element={<Donate />} />
+            <Route path="/collect" element={<Collect />} />
+            <Route path="/contact" element={<ContactUs />} />
+          </Routes>
+        </main>
+      </div>
+    </Router>
   );
 }
 
