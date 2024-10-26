@@ -1,54 +1,42 @@
 // server/controllers/donationController.js
 const Donation = require("../models/Donation");
+const { v4: uuidv4 } = require("uuid");
 
-// Add new donation
-exports.addDonation = async (req, res) => {
-  const { quantity, pinCode, waterQuality, donorName, donorContact } = req.body;
-
-  if (!quantity || !pinCode || !waterQuality) {
-    return res
-      .status(400)
-      .json({ error: "Quantity, pin code, and water quality are required." });
-  }
-
+// Add a new donation
+const addDonation = async (req, res) => {
   try {
     const donation = new Donation({
-      quantity,
-      pinCode,
-      waterQuality,
-      donorName: donorName || "Anonymous",
-      donorContact,
+      ...req.body,
+      uid: uuidv4(), // Generate a unique ID
     });
     await donation.save();
-    res.status(201).json(donation);
+    res.status(201).json({ message: "Donation added successfully", donation });
   } catch (error) {
-    res.status(400).json({ error: "Unable to add donation" });
+    res.status(500).json({ message: "Error adding donation", error });
   }
 };
 
 // Get all donations
-exports.getDonations = async (req, res) => {
+const getDonations = async (req, res) => {
   try {
     const donations = await Donation.find();
     res.status(200).json(donations);
   } catch (error) {
-    res.status(500).json({ error: "Unable to fetch donations" });
+    res.status(500).json({ message: "Error retrieving donations", error });
   }
 };
 
-// Get donations by pin code
-exports.getDonationsByPinCode = async (req, res) => {
+// Get donations by pincode
+const getDonationsByPinCode = async (req, res) => {
   const { pinCode } = req.params;
-
   try {
-    const donations = await Donation.find({ pinCode });
-    if (donations.length === 0) {
-      return res
-        .status(404)
-        .json({ message: `No donations found for pin code ${pinCode}` });
-    }
+    const donations = await Donation.find({ pincode: pinCode });
     res.status(200).json(donations);
   } catch (error) {
-    res.status(500).json({ error: "Unable to fetch donations" });
+    res
+      .status(500)
+      .json({ message: "Error retrieving donations by pincode", error });
   }
 };
+
+module.exports = { addDonation, getDonations, getDonationsByPinCode };
