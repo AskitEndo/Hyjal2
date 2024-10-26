@@ -45,7 +45,6 @@ const Navbar = () => {
           <NavItem to="/contact" icon="https://cdn.lordicon.com/srsgifqc.json" label="Contact" />
         </nav>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 h-4 bg-gradient-to-b from-black/5 to-transparent"></div>
     </header>
   );
 };
