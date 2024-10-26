@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios"; // Make sure to import axios
 
 export default function SmoothDonationForm() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    pincode: '',
-    uid: '',
-    waterQuantity: 1,
-    waterQuality: ''
+    name: "",
+    email: "",
+    pincode: "",
+    uid: "",
+    quantity: 1,
+    waterQuality: "",
   });
   const [errors, setErrors] = useState({});
+  const [submissionStatus, setSubmissionStatus] = useState(null);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         event.preventDefault();
         if (currentSlide < slides.length - 1) {
           setCurrentSlide(currentSlide + 1);
@@ -24,34 +26,45 @@ export default function SmoothDonationForm() {
       }
     };
 
-    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, [currentSlide]);
 
   const validateField = (field, value) => {
     let isValid = true;
-    let errorMessage = '';
+    let errorMessage = "";
 
     switch (field) {
-      case 'pincode':
-      case 'uid':
+      case "pincode":
+        if (!value || isNaN(value)) {
+          isValid = false;
+          errorMessage = "Pincode is required and must be a number";
+        }
+        break;
+      case "uid":
         if (!value.trim()) {
           isValid = false;
-          errorMessage = `${field.charAt(0).toUpperCase() + field.slice(1)} is required`;
+          errorMessage = "UID is required";
         }
         break;
-      case 'waterQuantity':
+      case "quantity":
         if (value <= 0) {
           isValid = false;
-          errorMessage = 'Water quantity must be greater than 0';
+          errorMessage = "Water quantity must be greater than 0";
         }
         break;
-      case 'waterQuality':
+      case "waterQuality":
         if (!value) {
           isValid = false;
-          errorMessage = 'Please select a water quality option';
+          errorMessage = "Please select a water quality option";
+        }
+        break;
+      case "email":
+        if (value && !/\S+@\S+\.\S+/.test(value)) {
+          isValid = false;
+          errorMessage = "Invalid email format";
         }
         break;
       default:
@@ -63,6 +76,9 @@ export default function SmoothDonationForm() {
   };
 
   const handleInputChange = (field, value) => {
+    if (field === "pincode" || field === "quantity") {
+      value = parseInt(value) || "";
+    }
     setFormData((prev) => ({ ...prev, [field]: value }));
     validateField(field, value);
   };
@@ -72,7 +88,11 @@ export default function SmoothDonationForm() {
     const fieldToValidate = currentSlideData.field;
     const valueToValidate = formData[fieldToValidate];
 
-    if (validateField(fieldToValidate, valueToValidate) || fieldToValidate === 'name' || fieldToValidate === 'email') {
+    if (
+      validateField(fieldToValidate, valueToValidate) ||
+      fieldToValidate === "name" ||
+      fieldToValidate === "email"
+    ) {
       if (currentSlide < slides.length - 1) {
         setCurrentSlide(currentSlide + 1);
       } else {
@@ -81,37 +101,79 @@ export default function SmoothDonationForm() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     const allFieldsValid = slides.every(
-      (slide) => validateField(slide.field, formData[slide.field]) || slide.field === 'name' || slide.field === 'email'
+      (slide) =>
+        validateField(slide.field, formData[slide.field]) ||
+        slide.field === "name" ||
+        slide.field === "email"
     );
 
     if (allFieldsValid) {
-      console.log('Donation submitted:', formData);
-      // Here you would typically send the data to a server
+      try {
+        setSubmissionStatus("submitting");
+        const response = await axios.post(
+          "http://localhost:5000/donation/add",
+          formData
+        );
+        console.log("Donation submitted:", response.data);
+        setSubmissionStatus("success");
+      } catch (error) {
+        console.error("Error submitting donation:", error);
+        setSubmissionStatus("error");
+        setErrors((prev) => ({
+          ...prev,
+          submit: "Failed to submit the donation. Please try again.",
+        }));
+      }
     }
   };
 
   const waterQualityOptions = [
-    { value: 'potable', label: 'Potable' },
-    { value: 'non-potable', label: 'Non-Potable' },
-    { value: 'distilled', label: 'Distilled' },
-    { value: 'mineral', label: 'Mineral' },
-    { value: 'purified', label: 'Purified' }
+    { value: "potable", label: "Potable" },
+    { value: "non-potable", label: "Non-Potable" },
+    { value: "distilled", label: "Distilled" },
+    { value: "mineral", label: "Mineral" },
+    { value: "purified", label: "Purified" },
   ];
 
   const slides = [
-    { field: 'name', label: 'Name', type: 'text', placeholder: 'Enter your name (optional)' },
-    { field: 'email', label: 'Email', type: 'email', placeholder: 'Enter your email (optional)' },
-    { field: 'pincode', label: 'Pincode', type: 'text', placeholder: 'Enter your pincode' },
-    { field: 'uid', label: 'UID', type: 'text', placeholder: 'Enter your UID' },
-    { field: 'waterQuantity', label: 'Water Quantity (in liters)', type: 'number', min: 1 },
-    { field: 'waterQuality', label: 'Water Quality', type: 'radio', options: waterQualityOptions }
+    {
+      field: "name",
+      label: "Name",
+      type: "text",
+      placeholder: "Enter your name (optional)",
+    },
+    {
+      field: "email",
+      label: "Email",
+      type: "email",
+      placeholder: "Enter your email (optional)",
+    },
+    {
+      field: "pincode",
+      label: "Pincode",
+      type: "number",
+      placeholder: "Enter your pincode",
+    },
+    { field: "uid", label: "UID", type: "text", placeholder: "Enter your UID" },
+    {
+      field: "quantity",
+      label: "Water Quantity (in liters)",
+      type: "number",
+      min: 1,
+    },
+    {
+      field: "waterQuality",
+      label: "Water Quality",
+      type: "radio",
+      options: waterQualityOptions,
+    },
   ];
 
   const renderInput = (slide) => {
     switch (slide.type) {
-      case 'radio':
+      case "radio":
         return (
           <div className="space-y-2">
             {slide.options.map((option) => (
@@ -122,7 +184,9 @@ export default function SmoothDonationForm() {
                   name={slide.field}
                   value={option.value}
                   checked={formData[slide.field] === option.value}
-                  onChange={(e) => handleInputChange(slide.field, e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(slide.field, e.target.value)
+                  }
                   className="mr-2"
                 />
                 <label htmlFor={option.value} className="text-sm text-gray-700">
@@ -140,23 +204,35 @@ export default function SmoothDonationForm() {
             value={formData[slide.field]}
             onChange={(e) => handleInputChange(slide.field, e.target.value)}
             min={slide.min}
-            className={`w-full p-2 text-lg bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-black placeholder-gray-500 ${errors[slide.field] ? 'border-red-500' : ''}`}
-            required={slide.field !== 'name' && slide.field !== 'email'}
+            className={`w-full p-2 text-lg bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-black placeholder-gray-500 ${
+              errors[slide.field] ? "border-red-500" : ""
+            }`}
+            required={slide.field !== "name" && slide.field !== "email"}
           />
         );
     }
   };
 
   return (
-    <div className="flex justify-center items-center p-0 bg-transparent" style={{ height: '600px' }}>
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200" style={{ height: '600px' }}>
+    <div
+      className="flex justify-center items-center p-0 bg-transparent"
+      style={{ height: "600px" }}
+    >
+      <div
+        className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200"
+        style={{ height: "600px" }}
+      >
         <div className="p-8 flex flex-col justify-between h-full overflow-y-auto">
-          <h2 className="text-3xl font-bold text-black mb-6 text-center">Donate for Water</h2>
+          <h2 className="text-3xl font-bold text-black mb-6 text-center">
+            Donate for Water
+          </h2>
 
           <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-            <div 
-              className="bg-blue-600 h-2.5 rounded-full transition-all duration-300 ease-in-out" 
-              style={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}
+            <div
+              className="bg-blue-600 h-2.5 rounded-full transition-all duration-300 ease-in-out"
+              style={{
+                width: `${((currentSlide + 1) / slides.length) * 100}%`,
+              }}
             ></div>
           </div>
 
@@ -166,9 +242,20 @@ export default function SmoothDonationForm() {
             </label>
             {renderInput(slides[currentSlide])}
             {errors[slides[currentSlide].field] && (
-              <p className="text-red-500 text-sm mt-1">{errors[slides[currentSlide].field]}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors[slides[currentSlide].field]}
+              </p>
             )}
           </div>
+
+          {submissionStatus === "success" && (
+            <p className="text-green-500 text-sm mb-4">
+              Donation submitted successfully!
+            </p>
+          )}
+          {submissionStatus === "error" && (
+            <p className="text-red-500 text-sm mb-4">{errors.submit}</p>
+          )}
 
           <div className="flex justify-between">
             <button
@@ -182,7 +269,7 @@ export default function SmoothDonationForm() {
               onClick={handleNext}
               className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-all duration-300 ease-in-out"
             >
-              {currentSlide === slides.length - 1 ? 'Submit' : 'Next'}
+              {currentSlide === slides.length - 1 ? "Submit" : "Next"}
             </button>
           </div>
         </div>

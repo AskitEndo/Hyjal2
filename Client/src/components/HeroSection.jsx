@@ -1,5 +1,6 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import FastTypewriter from './FastTypewriter';
+import Tilt from 'react-parallax-tilt';
 
 const words = [
   "amazing opportunities",
@@ -23,11 +24,8 @@ const HeroSection = () => {
 
   const scrollToAbout = () => {
     const aboutSection = document.getElementById('about-us');
-    console.log('About section:', aboutSection); // Debug log
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      console.log('About section not found'); // Debug log
     }
   };
 
@@ -56,24 +54,33 @@ const HeroSection = () => {
             </button>
           </div>
           <div className="w-full md:w-4/12 relative">
-            <div className="aspect-square relative">
-              <div className="bg absolute inset-0 flex items-center justify-center z-0">
-                <img
-                  src="/src/assets/BuildingBg.svg"
-                  alt="Building Background"
-                  className="w-11/12 h-11/12 object-cover"
-                />
+            <Tilt
+              className="Tilt"
+              tiltMaxAngleX={15}
+              tiltMaxAngleY={15}
+              perspective={1000}
+              transitionSpeed={400}
+              scale={1.05}
+            >
+              <div className="aspect-square relative">
+                <div className="bg absolute inset-0 flex items-center justify-center z-0">
+                  <img
+                    src="/src/assets/BuildingBg.svg"
+                    alt="Building Background"
+                    className="w-10/12 h-10/12 object-contain"
+                  />
+                </div>
+                <div className="truck absolute inset-x-0 bottom-8 flex items-center justify-center z-10">
+                  <lord-icon
+                    src="https://cdn.lordicon.com/amfpjnmb.json"
+                    trigger="loop"
+                    colors="primary:#121331,secondary:#9ce5f4,tertiary:#3a3347,quaternary:#f4f19c,quinary:#646e78"
+                    style={{ width: '225px', height: '225px' }}
+                    speed="3">
+                  </lord-icon>
+                </div>
               </div>
-              <div className="truck absolute inset-x-0 bottom-8 flex items-center justify-center z-10">
-                <lord-icon
-                  src="https://cdn.lordicon.com/amfpjnmb.json"
-                  trigger="loop"
-                  colors="primary:#121331,secondary:#9ce5f4,tertiary:#3a3347,quaternary:#f4f19c,quinary:#646e78"
-                  style={{ width: '250px', height: '250px' }}
-                  speed="3">
-                </lord-icon>
-              </div>
-            </div>
+            </Tilt>
           </div>
         </div>
       </div>
