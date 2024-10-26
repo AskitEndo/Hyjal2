@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import FastTypewriter from './FastTypewriter';
-import WaterdropSVG from '../assets/waterdrop.svg'; // Adjust the import path as needed
+
 
 const words = [
   "amazing opportunities",
