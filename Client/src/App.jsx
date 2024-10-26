@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Donate from "./pages/Donate";
 import Collect from "./pages/Collect";
 import ContactUs from "./pages/ContactUs";
-
+import Footer from "./components/Footer";
 function App() {
   return (
     <Router>
@@ -19,6 +19,7 @@ function App() {
             <Route path="/contact" element={<ContactUs />} />
           </Routes>
         </main>
+        <Footer />
       </div>
     </Router>
   );
