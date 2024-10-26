@@ -198,7 +198,7 @@ export default function SmoothCollectionForm() {
                   onChange={(e) =>
                     handleInputChange(slide.field, e.target.value)
                   }
-                  className="mr-2"
+                  className="mr-2 h-4 w-4 text-blue-600 focus:ring-blue-500"
                 />
                 <label htmlFor={option.value} className="text-sm text-gray-700">
                   {option.label}
@@ -215,7 +215,7 @@ export default function SmoothCollectionForm() {
             value={formData[slide.field]}
             onChange={(e) => handleInputChange(slide.field, e.target.value)}
             min={slide.min}
-            className={`w-full p-2 text-lg bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-black placeholder-gray-500 ${
+            className={`w-full p-2 text-base bg-white border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-gray-800 placeholder-gray-500 ${
               errors[slide.field] ? "border-red-500" : ""
             }`}
             required={slide.field !== "name" && slide.field !== "email"}
@@ -227,28 +227,28 @@ export default function SmoothCollectionForm() {
   return (
     <div
       className="flex justify-center items-center p-0 bg-transparent"
-      style={{ height: "600px" }}
+      style={{ height: "435px" }}
     >
       <div
         className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200"
-        style={{ height: "600px" }}
+        style={{ height: "435px" }}
       >
-        <div className="p-8 flex flex-col justify-between h-full overflow-y-auto">
-          <h2 className="text-3xl font-bold text-black mb-6 text-center">
+        <div className="p-6 flex flex-col justify-between h-full overflow-y-auto">
+          <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">
             Water Collection Form
           </h2>
 
-          <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6">
+          <div className="w-full bg-gray-200 rounded-full h-2 mb-4">
             <div
-              className="bg-blue-600 h-2.5 rounded-full transition-all duration-300 ease-in-out"
+              className="bg-blue-600 h-2 rounded-full transition-all duration-300 ease-in-out"
               style={{
                 width: `${((currentSlide + 1) / slides.length) * 100}%`,
               }}
             ></div>
           </div>
 
-          <div className="mb-6 flex-grow">
-            <label className="block text-sm font-medium text-gray-700 mb-2">
+          <div className="mb-4 flex-grow">
+            <label className="block text-base font-medium text-gray-700 mb-2">
               {slides[currentSlide].label}
             </label>
             {renderInput(slides[currentSlide])}
@@ -257,28 +257,29 @@ export default function SmoothCollectionForm() {
                 {errors[slides[currentSlide].field]}
               </p>
             )}
-            {submissionStatus === "success" && (
-              <p className="text-green-500 text-sm mt-2">
-                Form submitted successfully!
-              </p>
-            )}
-            {submissionStatus === "error" && (
-              <p className="text-red-500 text-sm mt-2">{errors.submit}</p>
-            )}
           </div>
+
+          {submissionStatus === "success" && (
+            <p className="text-green-500 text-sm mb-2">
+              Form submitted successfully!
+            </p>
+          )}
+          {submissionStatus === "error" && (
+            <p className="text-red-500 text-sm mb-2">{errors.submit}</p>
+          )}
 
           <div className="flex justify-between">
             <button
               onClick={() => setCurrentSlide(Math.max(0, currentSlide - 1))}
               disabled={currentSlide === 0}
-              className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 disabled:opacity-50 transition-all duration-300 ease-in-out"
+              className="px-4 py-2 text-base bg-blue-500 text-white rounded-full hover:bg-blue-600 disabled:opacity-50 transition-all duration-300 ease-in-out"
             >
               Previous
             </button>
             <button
               onClick={handleNext}
               disabled={submissionStatus === "submitting"}
-              className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-all duration-300 ease-in-out disabled:opacity-50"
+              className="px-4 py-2 text-base bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-all duration-300 ease-in-out disabled:opacity-50"
             >
               {currentSlide === slides.length - 1
                 ? submissionStatus === "submitting"

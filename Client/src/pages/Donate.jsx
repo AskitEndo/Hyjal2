@@ -34,16 +34,16 @@ export default function Donate() {
   }, []);
 
   return (
-    <div className="flex flex-col md:flex-row gap-6 p-8 bg-gray-50 min-h-screen items-center justify-center">
+    <div className="flex flex-col md:flex-row gap-6 p-8 bg-yellow-50 min-h-screen items-center justify-center">
       {/* SmoothDonationForm Component */}
-      <div className="flex-1 p-6 bg-white rounded-lg shadow-lg max-w-lg h-[700px] w-full">
+      <div className="flex-1 p-6 bg-white rounded-lg shadow-lg max-w-lg h-[500px] w-full">
         <SmoothDonationForm />
       </div>
 
       {/* Donation Data Section */}
-      <div className="flex-1 p-6 bg-white rounded-lg shadow-lg max-w-lg h-[700px] w-full overflow-y-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100">
+      <div className="flex-1 p-6 bg-white rounded-lg shadow-lg max-w-lg h-[500px] w-full overflow-y-auto scrollbar-thin scrollbar-thumb-blue-300 scrollbar-track-blue-100">
         <div className="h-full p-4">
-          <h2 className="text-2xl font-semibold mb-4 text-black">
+          <h2 className="text-2xl font-semibold mb-4 text-blue-800">
             View Donations
           </h2>
           <div className="flex gap-4 mb-4">
@@ -58,11 +58,11 @@ export default function Donate() {
               value={pincode}
               onChange={(e) => setPincode(e.target.value)}
               placeholder="Enter Pincode"
-              className="border rounded px-2 py-1"
+              className="border rounded px-2 py-1 focus:ring-2 focus:ring-blue-300 focus:border-blue-300"
             />
             <button
               onClick={() => fetchDonations("pincode")}
-              className="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
             >
               Search
             </button>
@@ -75,17 +75,17 @@ export default function Donate() {
             <div className="overflow-x-auto">
               <table className="min-w-full bg-white">
                 <thead>
-                  <tr>
-                    <th className="px-4 py-2 text-left">Name</th>
-                    <th className="px-4 py-2 text-left">Quantity</th>
-                    <th className="px-4 py-2 text-left">Pincode</th>
+                  <tr className="bg-blue-100">
+                    <th className="px-4 py-2 text-left text-blue-800">Name</th>
+                    <th className="px-4 py-2 text-left text-blue-800">Quantity</th>
+                    <th className="px-4 py-2 text-left text-blue-800">Pincode</th>
                   </tr>
                 </thead>
                 <tbody>
                   {donations.map((donation, index) => (
                     <tr
                       key={index}
-                      className={index % 2 === 0 ? "bg-gray-100" : ""}
+                      className={index % 2 === 0 ? "bg-blue-50" : ""}
                     >
                       <td className="px-4 py-2">{donation.name}</td>
                       <td className="px-4 py-2">{donation.quantity}</td>

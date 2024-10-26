@@ -1,16 +1,16 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const AboutUsSection = () => {
-  const scrollToBottom = () => {
-    window.scrollTo({
-      top: document.documentElement.scrollHeight,
-      behavior: 'smooth'
-    });
+  const navigate = useNavigate();
+
+  const handleLearnMore = () => {
+    navigate('/contact');
   };
 
   return (
     <section id="about-us" className="bg-[rgb(255,226,134)] py-16">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-8 sm:px-12">
         <h2 className="text-3xl font-bold text-yellow-900 text-center mb-8">About HyJal</h2>
         <div className="bg-yellow-100 p-6 rounded-lg shadow-md">
           <p className="text-yellow-900 mb-4">
@@ -23,7 +23,7 @@ const AboutUsSection = () => {
         <div className="mt-8 text-center">
           <button 
             className="bg-yellow-500 text-yellow-900 px-6 py-2 rounded-full font-semibold hover:bg-yellow-600 transition-colors duration-300"
-            onClick={scrollToBottom}
+            onClick={handleLearnMore}
           >
             Learn More
           </button>

@@ -13,7 +13,7 @@ const Footer = () => {
             <Link to="/donate" className="hover:text-yellow-700 transition-colors">Donate</Link>
             <Link to="/collect" className="hover:text-yellow-700 transition-colors">Collect</Link>
             <Link to="/contact" className="hover:text-yellow-700 transition-colors">Contact Us</Link>
-            <Link to="/feedback" className="hover:text-yellow-700 transition-colors">Feedback</Link>
+            <Link to="/contact" className="hover:text-yellow-700 transition-colors">Feedback</Link>
           </div>
 
           {/* Social Icons */}

@@ -26,7 +26,7 @@ const AppContent = () => {
   return (
     <>
       <LoadingBar
-        color="#ffca28" // Adjust color to match your theme
+        color="blue" // Adjust color to match your theme
         ref={loadingBarRef}
         height={4}
       />
