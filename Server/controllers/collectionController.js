@@ -1,28 +1,20 @@
 // server/controllers/collectionController.js
-const Collection = require("../models/collectionModel.js");
+const Collection = require("../models/collectionModel");
+const { v4: uuidv4 } = require("uuid");
 
 // Add a new collection
 const addCollection = async (req, res) => {
   try {
-    const { pincode, name, email, paymentMode, waterQuality, quantity } =
-      req.body;
-    const newCollection = new Collection({
-      pincode,
-      name,
-      email,
-      paymentMode,
-      waterQuality,
-      quantity,
+    const collection = new Collection({
+      ...req.body,
+      uid: uuidv4(), // Generate a unique ID
     });
-
-    await newCollection.save();
+    await collection.save();
     res
       .status(201)
-      .json({ message: "Collection added successfully", data: newCollection });
+      .json({ message: "Collection added successfully", collection });
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error adding collection", error: error.message });
+    res.status(500).json({ message: "Error adding collection", error });
   }
 };
 
@@ -32,22 +24,20 @@ const getCollections = async (req, res) => {
     const collections = await Collection.find();
     res.status(200).json(collections);
   } catch (error) {
-    res
-      .status(500)
-      .json({ message: "Error fetching collections", error: error.message });
+    res.status(500).json({ message: "Error retrieving collections", error });
   }
 };
 
 // Get collections by pincode
 const getCollectionsByPinCode = async (req, res) => {
+  const { pinCode } = req.params;
   try {
-    const { pinCode } = req.params;
     const collections = await Collection.find({ pincode: pinCode });
     res.status(200).json(collections);
   } catch (error) {
     res
       .status(500)
-      .json({ message: "Error fetching collections", error: error.message });
+      .json({ message: "Error retrieving collections by pincode", error });
   }
 };
 

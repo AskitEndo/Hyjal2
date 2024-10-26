@@ -1,20 +1,22 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
+import axios from "axios"; // Add this import
 
-export default function WaterCollectionForm() {
+export default function SmoothCollectionForm() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    pincode: '',
-    waterQuantity: 1,
-    waterQuality: '',
-    paymentMode: ''
+    name: "",
+    email: "",
+    pincode: "",
+    quantity: 1,
+    waterQuality: "",
+    paymentMode: "",
   });
   const [errors, setErrors] = useState({});
+  const [submissionStatus, setSubmissionStatus] = useState(null);
 
   useEffect(() => {
     const handleKeyPress = (event) => {
-      if (event.key === 'Enter') {
+      if (event.key === "Enter") {
         event.preventDefault();
         if (currentSlide < slides.length - 1) {
           setCurrentSlide(currentSlide + 1);
@@ -24,57 +26,57 @@ export default function WaterCollectionForm() {
       }
     };
 
-    window.addEventListener('keydown', handleKeyPress);
+    window.addEventListener("keydown", handleKeyPress);
     return () => {
-      window.removeEventListener('keydown', handleKeyPress);
+      window.removeEventListener("keydown", handleKeyPress);
     };
   }, [currentSlide]);
 
   const validateField = (field, value) => {
     let isValid = true;
-    let errorMessage = '';
+    let errorMessage = "";
 
     switch (field) {
-      case 'pincode':
+      case "pincode":
         if (!value.trim()) {
           isValid = false;
-          errorMessage = 'Pincode is required';
+          errorMessage = "Pincode is required";
         }
         break;
-      case 'email':
+      case "email":
         if (value && !/\S+@\S+\.\S+/.test(value)) {
           isValid = false;
-          errorMessage = 'Invalid email address';
+          errorMessage = "Invalid email address";
         }
         break;
-      case 'waterQuantity':
-        if (value <= 0) {
+      case "quantity":
+        if (value < 1) {
           isValid = false;
-          errorMessage = 'Water quantity must be greater than 0';
+          errorMessage = "Water quantity must be at least 1 liter";
         }
         break;
-      case 'waterQuality':
+      case "waterQuality":
         if (!value) {
           isValid = false;
-          errorMessage = 'Please select a water quality option';
+          errorMessage = "Please select a water quality option";
         }
         break;
-      case 'paymentMode':
+      case "paymentMode":
         if (!value) {
           isValid = false;
-          errorMessage = 'Please select a payment mode';
+          errorMessage = "Please select a payment mode";
         }
         break;
       default:
         break;
     }
 
-    setErrors(prev => ({ ...prev, [field]: errorMessage }));
+    setErrors((prev) => ({ ...prev, [field]: errorMessage }));
     return isValid;
   };
 
   const handleInputChange = (field, value) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev) => ({ ...prev, [field]: value }));
     validateField(field, value);
   };
 
@@ -92,38 +94,97 @@ export default function WaterCollectionForm() {
     }
   };
 
-  const handleSubmit = () => {
-    const allFieldsValid = slides.every(slide => validateField(slide.field, formData[slide.field]));
+  const handleSubmit = async () => {
+    const allFieldsValid = slides.every((slide) =>
+      validateField(slide.field, formData[slide.field])
+    );
 
     if (allFieldsValid) {
-      console.log('Collection request submitted:', formData);
-      // Here you would typically send the data to a server
+      try {
+        setSubmissionStatus("submitting");
+        const response = await axios.post(
+          "http://localhost:5000/collection/add",
+          formData
+        );
+        console.log("Collection request submitted:", response.data);
+        setSubmissionStatus("success");
+      } catch (error) {
+        console.error("Error submitting collection request:", error);
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.error("Server responded with:", error.response.data);
+          console.error("Status code:", error.response.status);
+          console.error("Headers:", error.response.headers);
+        } else if (error.request) {
+          // The request was made but no response was received
+          console.error("No response received:", error.request);
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.error("Error setting up the request:", error.message);
+        }
+        setSubmissionStatus("error");
+        setErrors((prev) => ({
+          ...prev,
+          submit: "Failed to submit the form. Please try again.",
+        }));
+      }
     }
   };
 
   const waterQualityOptions = [
-    { value: 'potable', label: 'Potable' },
-    { value: 'non-potable', label: 'Non-Potable' },
-    { value: 'distilled', label: 'Distilled' },
-    { value: 'mineral', label: 'Mineral' },
-    { value: 'purified', label: 'Purified' }
+    { value: "potable", label: "Potable" },
+    { value: "non-potable", label: "Non-Potable" },
+    { value: "distilled", label: "Distilled" },
+    { value: "mineral", label: "Mineral" },
+    { value: "purified", label: "Purified" },
   ];
 
   const slides = [
-    { field: 'name', label: 'Name', type: 'text', placeholder: 'Enter your name (optional)' },
-    { field: 'email', label: 'Email', type: 'email', placeholder: 'Enter your email (optional)' },
-    { field: 'pincode', label: 'Pincode', type: 'text', placeholder: 'Enter your pincode' },
-    { field: 'waterQuantity', label: 'Water Quantity (in liters)', type: 'number', min: 1 },
-    { field: 'waterQuality', label: 'Water Quality', type: 'radio', options: waterQualityOptions },
-    { field: 'paymentMode', label: 'Payment Mode', type: 'radio', options: [
-      { value: 'cod', label: 'Cash on Delivery' },
-      { value: 'online', label: 'Online Payment' },
-    ]}
+    {
+      field: "name",
+      label: "Name",
+      type: "text",
+      placeholder: "Enter your name (optional)",
+    },
+    {
+      field: "email",
+      label: "Email",
+      type: "email",
+      placeholder: "Enter your email (optional)",
+    },
+    {
+      field: "pincode",
+      label: "Pincode",
+      type: "text",
+      placeholder: "Enter your pincode",
+    },
+    {
+      field: "quantity",
+      label: "Water Quantity (in liters)",
+      type: "number",
+      min: 1,
+    },
+    {
+      field: "waterQuality",
+      label: "Water Quality",
+      type: "radio",
+      options: waterQualityOptions,
+    },
+    {
+      field: "paymentMode",
+      label: "Payment Mode",
+      type: "radio",
+      options: [
+        { value: "COD", label: "Cash on Delivery" },
+        { value: "Online", label: "Online Payment" },
+      ],
+    },
   ];
 
   const renderInput = (slide) => {
     switch (slide.type) {
-      case 'radio':
+      case "radio":
         return (
           <div className="space-y-2">
             {slide.options.map((option) => (
@@ -134,7 +195,9 @@ export default function WaterCollectionForm() {
                   name={slide.field}
                   value={option.value}
                   checked={formData[slide.field] === option.value}
-                  onChange={(e) => handleInputChange(slide.field, e.target.value)}
+                  onChange={(e) =>
+                    handleInputChange(slide.field, e.target.value)
+                  }
                   className="mr-2"
                 />
                 <label htmlFor={option.value} className="text-sm text-gray-700">
@@ -152,23 +215,35 @@ export default function WaterCollectionForm() {
             value={formData[slide.field]}
             onChange={(e) => handleInputChange(slide.field, e.target.value)}
             min={slide.min}
-            className={`w-full p-2 text-lg bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-black placeholder-gray-500 ${errors[slide.field] ? 'border-red-500' : ''}`}
-            required={slide.field !== 'name' && slide.field !== 'email'}
+            className={`w-full p-2 text-lg bg-white border-2 border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 text-black placeholder-gray-500 ${
+              errors[slide.field] ? "border-red-500" : ""
+            }`}
+            required={slide.field !== "name" && slide.field !== "email"}
           />
         );
     }
   };
 
   return (
-    <div className="flex justify-center items-center p-0 bg-transparent" style={{ height: '600px' }}>
-      <div className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200" style={{ height: '600px' }}>
+    <div
+      className="flex justify-center items-center p-0 bg-transparent"
+      style={{ height: "600px" }}
+    >
+      <div
+        className="w-full max-w-md bg-white rounded-lg shadow-lg overflow-hidden border border-gray-200"
+        style={{ height: "600px" }}
+      >
         <div className="p-8 flex flex-col justify-between h-full overflow-y-auto">
-          <h2 className="text-3xl font-bold text-black mb-6 text-center">Water Collection Form</h2>
+          <h2 className="text-3xl font-bold text-black mb-6 text-center">
+            Water Collection Form
+          </h2>
 
           <div className="w-full bg-gray-200 rounded-full h-2.5 mb-6">
-            <div 
-              className="bg-blue-600 h-2.5 rounded-full transition-all duration-300 ease-in-out" 
-              style={{ width: `${((currentSlide + 1) / slides.length) * 100}%` }}
+            <div
+              className="bg-blue-600 h-2.5 rounded-full transition-all duration-300 ease-in-out"
+              style={{
+                width: `${((currentSlide + 1) / slides.length) * 100}%`,
+              }}
             ></div>
           </div>
 
@@ -178,7 +253,17 @@ export default function WaterCollectionForm() {
             </label>
             {renderInput(slides[currentSlide])}
             {errors[slides[currentSlide].field] && (
-              <p className="text-red-500 text-sm mt-1">{errors[slides[currentSlide].field]}</p>
+              <p className="text-red-500 text-sm mt-1">
+                {errors[slides[currentSlide].field]}
+              </p>
+            )}
+            {submissionStatus === "success" && (
+              <p className="text-green-500 text-sm mt-2">
+                Form submitted successfully!
+              </p>
+            )}
+            {submissionStatus === "error" && (
+              <p className="text-red-500 text-sm mt-2">{errors.submit}</p>
             )}
           </div>
 
@@ -192,9 +277,14 @@ export default function WaterCollectionForm() {
             </button>
             <button
               onClick={handleNext}
-              className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-all duration-300 ease-in-out"
+              disabled={submissionStatus === "submitting"}
+              className="px-4 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-all duration-300 ease-in-out disabled:opacity-50"
             >
-              {currentSlide === slides.length - 1 ? 'Submit' : 'Next'}
+              {currentSlide === slides.length - 1
+                ? submissionStatus === "submitting"
+                  ? "Submitting..."
+                  : "Submit"
+                : "Next"}
             </button>
           </div>
         </div>
