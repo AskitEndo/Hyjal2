@@ -31,8 +31,8 @@ const CommunitySection = () => {
 
   const handleGoToRoute = () => {
     // Redirect to home page
-    navigate('/');
-    
+    navigate("/");
+
     // Later, you can replace this with your simulation page, e.g.:
     // navigate('/simulation', { state: { pincode: pincode } });
   };
@@ -52,7 +52,7 @@ const CommunitySection = () => {
                 onChange={handlePincodeChange}
                 maxLength={6}
               />
-              <button 
+              <button
                 className="ml-2 bg-yellow-500 text-yellow-900 px-3 py-1 rounded-full hover:bg-yellow-600 transition-colors duration-200"
                 onClick={handleGoClick}
               >
@@ -60,9 +60,9 @@ const CommunitySection = () => {
               </button>
             </div>
             {showRouteButton && (
-              <button 
+              <button
                 className="bg-yellow-400 px-6 py-2 rounded-full shadow-lg text-yellow-900 hover:bg-yellow-500 transition-colors duration-200"
-                onClick={handleGoToRoute}
+                onClick={() => navigate("/delivery-simulation")}
               >
                 Go to route
               </button>

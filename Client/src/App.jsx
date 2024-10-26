@@ -6,6 +6,7 @@ import Donate from "./pages/Donate";
 import Collect from "./pages/Collect";
 import ContactUs from "./pages/ContactUs";
 import Footer from "./components/Footer";
+import DeliverySimulation from "./pages/DeliverySimulation";
 function App() {
   return (
     <Router>
@@ -17,6 +18,10 @@ function App() {
             <Route path="/donate" element={<Donate />} />
             <Route path="/collect" element={<Collect />} />
             <Route path="/contact" element={<ContactUs />} />
+            <Route
+              path="/delivery-simulation"
+              element={<DeliverySimulation />}
+            />
           </Routes>
         </main>
         <Footer />
