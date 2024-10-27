@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+import Walking from "../assets/Walking.svg";
+
+
 const stateCoordinates = {
   "ANDHRA PRADESH": { x: 200, y: 280 },
   "ARUNACHAL PRADESH": { x: 320, y: 120 },
@@ -179,50 +182,61 @@ const CommunitySection = () => {
   return (
     <section className="py-12 bg-yellow-100">
       <div className="container mx-auto px-4">
-        <div className="bg-white bg-opacity-50 rounded-xl p-8 shadow-lg relative mt-8">
+        <div className="bg-white bg-opacity-50 rounded-xl p-8 shadow-lg relative mt-16">
           {/* Pincode Input Overlay */}
-          <div className="absolute -top-6 left-8 right-8 flex flex-wrap gap-4 z-10">
-            <div className="pincode bg-yellow-400 px-4 py-2 rounded-full shadow-lg flex items-center">
-              <input
-                type="text"
-                placeholder="Enter your pincode"
-                className="bg-transparent border-none focus:outline-none text-yellow-900 placeholder-yellow-700 w-40"
-                value={pincode}
-                onChange={handlePincodeChange}
-                onKeyPress={(e) => {
-                  if (e.key === "Enter") {
-                    handleGoClick();
-                  }
-                }}
-                maxLength={6}
-              />
-              <button
-                className="ml-2 bg-yellow-500 text-yellow-900 px-3 py-1 rounded-full hover:bg-yellow-600 transition-colors duration-200 disabled:opacity-50"
-                onClick={handleGoClick}
-                disabled={isLoading}
-              >
-                {isLoading ? (
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                ) : (
-                  "Go"
-                )}
-              </button>
+          <div className="absolute -top-12 left-8 right-8 flex flex-wrap items-center justify-between">
+            <div className="flex items-center space-x-4 mb-4 sm:mb-0">
+              <div className="pincode bg-yellow-400 px-4 py-2 rounded-full shadow-lg flex items-center h-12">
+                <input
+                  type="text"
+                  placeholder="Enter your pincode"
+                  className="bg-transparent border-none focus:outline-none text-yellow-900 placeholder-yellow-700 w-32 sm:w-40"
+                  value={pincode}
+                  onChange={handlePincodeChange}
+                  onKeyPress={(e) => {
+                    if (e.key === "Enter") {
+                      handleGoClick();
+                    }
+                  }}
+                  maxLength={6}
+                />
+                <button
+                  className="ml-2 bg-yellow-500 text-yellow-900 px-4 py-1 rounded-full hover:bg-yellow-600 transition-colors duration-200 disabled:opacity-50 h-8"
+                  onClick={handleGoClick}
+                  disabled={isLoading}
+                >
+                  {isLoading ? (
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                  ) : (
+                    "Go"
+                  )}
+                </button>
+              </div>
+              {showRouteButton && (
+                <div className="flex items-center">
+                  <button
+                    className="bg-yellow-400 px-6 py-2 rounded-full shadow-lg text-yellow-900 hover:bg-yellow-500 transition-colors duration-200 h-12"
+                    onClick={() => navigate("/map")}
+                  >
+                    Go to route
+                  </button>
+                </div>
+              )}
             </div>
-            {showRouteButton && (
-              <button
-                className="bg-yellow-400 px-6 py-2 rounded-full shadow-lg text-yellow-900 hover:bg-yellow-500 transition-colors duration-200"
-                onClick={() => navigate("/map")}
-              >
-                Go to route
-              </button>
-            )}
+            
+            <img 
+              src={Walking} 
+              alt="Walking" 
+              className="h-24 w-24 ml-auto -mt-4 sm:mt-0" 
+              style={{ display: 'inline-block' }} 
+            />
           </div>
 
           {error && (
             <div className="text-red-500 text-sm mt-2 text-center">{error}</div>
           )}
 
-          <h2 className="text-2xl font-bold mb-6 text-center pt-4">
+          <h2 className="text-2xl font-bold mb-6 text-center pt-8">
             Your Community
           </h2>
 

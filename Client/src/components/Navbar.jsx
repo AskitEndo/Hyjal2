@@ -34,7 +34,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex justify-between items-center relative">
         <Link to="/" className="flex items-center space-x-4 bg-yellow-100 p-4 rounded-lg shadow-sm hover:shadow-md transition-all duration-200 hover:scale-105">
           <div className="bg-[rgb(255,226,134)] h-12 w-12 flex items-center justify-center rounded-lg font-semibold text-yellow-900">
-            <img src="/src/assets/Logo.png" alt="HyJal logo" className="h-10 w-10" />
+            <img src="/src/assets/Logo.png" alt="HyJal logo" className=" rounded-lg h-10 w-10" />
           </div>
           <h1 className="text-2xl font-bold text-yellow-900">HyJal</h1>
         </Link>
