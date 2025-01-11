@@ -28,6 +28,7 @@ Built with 💓 & 🧠 to be mobile-friendly, scalable, and accessible! Dive int
 
 ---
 <div id="topics">
+   
 ## 🚀 **CHECKOUT!**
 
 > <a href="#backend-setup"><img src="https://img.shields.io/badge/Backend-095ce0?style=for-the-badge" alt="Visit Hyjal"></a>
@@ -42,7 +43,7 @@ Built with 💓 & 🧠 to be mobile-friendly, scalable, and accessible! Dive int
 
 </div>
 
-<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20top-Blue?style=plastic" alt="Back To Topics"></a></p>
+<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20topics-Blue?style=plastic" alt="Back To Topics"></a></p>
 
 
 
@@ -79,7 +80,7 @@ Built with 💓 & 🧠 to be mobile-friendly, scalable, and accessible! Dive int
    ```
    Backend runs on `http://localhost:5000`.
 
-<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20top-Blue?style=plastic" alt="Back To Topics"></a></p>
+<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20topics-Blue?style=plastic" alt="Back To Topics"></a></p>
 
 </div>
 
@@ -111,7 +112,7 @@ Built with 💓 & 🧠 to be mobile-friendly, scalable, and accessible! Dive int
 
 4. Already deployed! Check out the [Live Website](https://hyjal2.netlify.app/).
 
-<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20top-Blue?style=plastic" alt="Back To Topics"></a></p>
+<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20topics-Blue?style=plastic" alt="Back To Topics"></a></p>
 
 </div>
 
@@ -127,7 +128,7 @@ The frontend is deployed on **Netlify** for wide availability and optimal perfor
 <a href="https://hyjal2.netlify.app/"><img src="https://img.shields.io/badge/Visit_Hyjal_Live-fcdc0d?style=for-the-badge" alt="Visit Hyjal"></a>
 </div>
 
-<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20top-Blue?style=plastic" alt="Back To Topics"></a></p>
+<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20topics-Blue?style=plastic" alt="Back To Topics"></a></p>
 
 </div>
 
@@ -164,7 +165,7 @@ The frontend is deployed on **Netlify** for wide availability and optimal perfor
 
 The Team behind HyJal. <img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Busts%20in%20Silhouette.png" alt="Busts in Silhouette" width="35" height="35" /><img src="https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/People/Busts%20in%20Silhouette.png" alt="Busts in Silhouette" width="35" height="35" />
 
-<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20top-Blue?style=plastic" alt="Back To Topics"></a></p>
+<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20topics-Blue?style=plastic" alt="Back To Topics"></a></p>
 
 </div>
 
