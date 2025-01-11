@@ -10,9 +10,9 @@
 
 **Hyjal** is a smart water management platform designed to promote sustainability and improve access to clean water in urban communities. Built using the MERN stack (MongoDB, Express, React, Node.js), it allows users to seamlessly donate and collect water while leveraging location-based pin-code precision for efficient resource distribution. Hyjal’s mobile-friendly and scalable design ensures accessibility across devices, encouraging community participation in water conservation efforts. By integrating technology with sustainability goals, Hyjal aims to address water scarcity and hygiene challenges, fostering a collective approach toward a healthier and more sustainable future.
 
-<center style="margin:8%; font-weight: bold;">
-Built with 💓 & 🧠 to be mobile-friendly, scalable, and accessible! Dive into the details and discover how this platform can change the way we think about water management.
-</center>
+<div align="center" style="margin:8%; font-weight: bold;">
+<b>Built with 💓 & 🧠 to be mobile-friendly, scalable, and accessible! Dive into the details and discover how this platform can change the way we think about water management.</b>
+</div>
 
 ---
 
@@ -24,7 +24,7 @@ Built with 💓 & 🧠 to be mobile-friendly, scalable, and accessible! Dive int
 - 🛠️ **MERN Stack**: A robust backend and a stylish frontend.
 - 💧 **Sustainability Focused**: Supporting global water conservation goals.
 
-<p align="right"><a href="#top"><img src="https://img.shields.io/badge/Move%20to%20top-Blue?style=plastic" alt="Back To Top"></a></p>
+
 
 ---
 <div id="topics">
@@ -43,7 +43,7 @@ Built with 💓 & 🧠 to be mobile-friendly, scalable, and accessible! Dive int
 
 </div>
 
-<p align="right"><a href="#topics"><img src="https://img.shields.io/badge/Move%20to%20topics-Blue?style=plastic" alt="Back To Topics"></a></p>
+<p align="right"><a href="#top"><img src="https://img.shields.io/badge/Move%20to%20top-Blue?style=plastic" alt="Back To Top"></a></p>
 
 
 
